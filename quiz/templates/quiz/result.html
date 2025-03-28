@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canada Love Quiz – Results</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.4);
+    }
+
+    .result-box {
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 16px;
+      max-width: 500px;
+      margin: 100px auto;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      color: #ff4b4b;
+      font-size: 2.5rem;
+    }
+      
+
+
+
+    p {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      color: #ff4b4b;
+    }
+
+    a.button {
+      background: #d71c1c;
+      color: white;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      display: inline-block;
+      margin: 10px 5px;
+    }
+
+    .social-share {
+      margin-top: 20px;
+    }
+
+    .social-share a {
+      display: inline-block;
+      margin: 5px;
+      color: white;
+      background: #333;
+      padding: 10px 15px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+<video autoplay muted loop id="bg-video">
+  <source src="https://cdn.coverr.co/videos/coverr-a-flag-of-canada-waving-4032/1080p.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="result-box">
+  <h1>Your Score: {{ score }}/10</h1>
+
+  {% if score >= 8 %}
+    <p>🍁 You're a True Canadian!</p>
+  {% elif score >= 5 %}
+    <p>🇨🇦 Not bad, eh?</p>
+  {% else %}
+    <p>🧐 Time to brush up on Canadian pride!</p>
+  {% endif %}
+
+  <a href="{% url 'quiz' %}" class="button">Try Again</a>
+
+  <div class="social-share">
+    <p>Share your results:</p>
+    <a href="https://twitter.com/intent/tweet?text=I+just+scored+{{ score }}/10+on+the+%23CanadaLoveQuiz+🍁!+Try+it+yourself!+http://127.0.0.1:8000/quiz/" target="_blank">Twitter</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000/quiz/" target="_blank">Facebook</a>
+    <a href="https://wa.me/?text=I+got+{{ score }}/10+on+the+Canada+Love+Quiz+🇨🇦.+Check+it+out:+http://127.0.0.1:8000/quiz/" target="_blank">WhatsApp</a>
+  </div>
+</div>
+
+{% if score >= 8 %}
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+  const canvas = document.getElementById('confetti-canvas');
+  const confettiInstance = confetti.create(canvas, { resize: true });
+
+  function launchConfetti() {
+    confettiInstance({
+      particleCount: 200,
+      spread: 100,
+      origin: { y: 0.6 }
+    });
+  }
+
+  launchConfetti();
+  setTimeout(launchConfetti, 500);
+  setTimeout(launchConfetti, 1000);
+</script>
+{% endif %}
+
+</body>
+</html>

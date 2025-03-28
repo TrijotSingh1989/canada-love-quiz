@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canada Love Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+
+    /* Progress Bar */
+    #progress-container {
+      width: 100%;
+      background: #eee;
+      height: 8px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+    }
+    #progress-bar {
+      height: 8px;
+      width: 0;
+      background: #d71c1c;
+      transition: width 0.3s ease-in-out;
+    }
+
+    .slide-container {
+      display: flex;
+      transition: transform 0.3s ease-in-out;
+      width: 1000%;
+    }
+
+    .slide {
+      min-width: 100vw;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .quiz-card {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      background: #d71c1c;
+      color: white;
+      cursor: pointer;
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress-container">
+  <div id="progress-bar"></div>
+</div>
+
+<form method="post">
+  {% csrf_token %}
+  <div class="slide-container" id="slides">
+    {% for field in form %}
+      <div class="slide">
+        <div class="quiz-card">
+          <h3>Question {{ forloop.counter }}:</h3>
+          <p>{{ field.label }}</p>
+          {{ field }}
+          <div class="nav-buttons">
+            {% if not forloop.first %}
+              <button type="button" onclick="prevSlide()">Previous</button>
+            {% endif %}
+            {% if not forloop.last %}
+              <button type="button" onclick="nextSlide()">Next</button>
+            {% else %}
+              <button type="submit">Submit</button>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</form>
+
+<script>
+  let currentSlide = 0;
+  const slides = document.getElementById("slides");
+  const totalSlides = slides.children.length;
+  const progressBar = document.getElementById("progress-bar");
+
+  function updateSlide() {
+    slides.style.transform = `translateX(-${currentSlide * 100}vw)`;
+    const progressPercent = ((currentSlide + 1) / totalSlides) * 100;
+    progressBar.style.width = `${progressPercent}%`;
+  }
+
+  function nextSlide() {
+    if (currentSlide < totalSlides - 1) {
+      currentSlide++;
+      updateSlide();
+    }
+  }
+
+  function prevSlide() {
+    if (currentSlide > 0) {
+      currentSlide--;
+      updateSlide();
+    }
+  }
+
+  let touchStartX = 0;
+  slides.addEventListener("touchstart", e => touchStartX = e.touches[0].clientX);
+  slides.addEventListener("touchend", e => {
+    const touchEndX = e.changedTouches[0].clientX;
+    if (touchEndX < touchStartX - 50) nextSlide();
+    if (touchEndX > touchStartX + 50) prevSlide();
+  });
+
+  updateSlide();
+</script>
+
+</body>
+</html>

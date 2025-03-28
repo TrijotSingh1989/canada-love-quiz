@@ -1,0 +1,9 @@
+<h2>Your Score: {{ score }}/10</h2>
+{% if score >= 8 %}
+<p>You’re a True Canadian! 🍁</p>
+{% elif score >= 5 %}
+<p>Not bad, eh? 🇨🇦</p>
+{% else %}
+<p>Time to brush up on your Canadian pride!</p>
+{% endif %}
+<a href="{% url 'quiz' %}">Try Again</a>
