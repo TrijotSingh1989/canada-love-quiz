@@ -1,2 +1,133 @@
-<h1>🇨🇦 How Much Do You Love Canada? 🇨🇦</h1>
-<a href="{% url 'quiz' %}">Take the Quiz</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>How Much Do You Love Canada?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --red: #cc0000;
+      --dark-red: #a30000;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #e9f5ff, #ffffff);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--red);
+    }
+
+    p {
+      font-size: 1rem;
+      color: #333;
+    }
+
+    a.button {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      background-color: var(--red);
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    a.button:hover {
+      background-color: var(--dark-red);
+    }
+
+    .emoji {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .facts {
+      text-align: left;
+      margin-top: 1.5rem;
+      background: #f9f9f9;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .facts h3 {
+      margin-top: 0;
+      color: #444;
+      font-size: 1.1rem;
+    }
+
+    .facts ul {
+      padding-left: 1.2rem;
+      list-style-type: "🍁 ";
+      margin: 0;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 1.5rem 1rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .facts {
+        font-size: 0.9rem;
+      }
+
+      .emoji {
+        font-size: 2rem;
+      }
+
+      a.button {
+        font-size: 0.95rem;
+        padding: 0.6rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="emoji">🇨🇦❤️</div>
+    <h1>How Much Do You Love Canada?</h1>
+    <p>Test your Canadian spirit with a fun 10-question quiz!</p>
+
+    <div class="facts">
+      <h3>Did you know?</h3>
+      <ul>
+        <li>Canada has more lakes than the rest of the world combined.</li>
+        <li>We invented maple syrup, hockey, and the zipper!</li>
+        <li>The name "Canada" comes from the word "Kanata," meaning village.</li>
+        <li>Our national animal is the beaver 🦫. Respect.</li>
+        <li>Yes, we say "sorry" — and we mean it. 🇨🇦</li>
+      </ul>
+    </div>
+
+    <a href="{% url 'quiz' %}" class="button">Take the Quiz</a>
+  </div>
+</body>
+</html>
